@@ -1,0 +1,15 @@
+---
+kind: pipeline
+name: Main
+
+steps:
+  - name: Tests
+    pull: always
+    image: python:3.7-buster
+    environment:
+      XDG_CACHE_HOME: tmp/pip
+    commands:
+      - apt-get update -qq && apt-get install -yqq libimage-exiftool-perl
+      - pip3 install poetry
+      - poetry install
+      - poetry run pytest
