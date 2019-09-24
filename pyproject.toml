@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "b7w-scripts"
+version = "0.1.0"
+description = "Useful scripts for photos and other things"
+authors = ["B7W <b7w@isudo.ru>"]
+license = "MIT"
+
+#packages = [
+#    { include="b7w", from="src" },
+#]
+
+
+[tool.poetry.dependencies]
+python = "^3.7"
+click = "^7.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^3.0"
+
+[tool.poetry.scripts]
+b7w = "b7w_scripts.cli:main"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

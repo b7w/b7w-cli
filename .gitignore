@@ -1,0 +1,11 @@
+\.pyc
+\.pyo
+\.DS_Store
+
+\.idea/
+*\.egg-info/
+
+tmp/
+target/
+
+*-local\.*
