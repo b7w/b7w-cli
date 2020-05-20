@@ -11,11 +11,13 @@ license = "MIT"
 
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 click = "^7.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
+pytest-cov = "^2.7"
+pytest-flakes = "^4.0"
 
 [tool.poetry.scripts]
 b7w = "b7w_scripts.cli:main"

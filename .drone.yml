@@ -5,7 +5,7 @@ name: Main
 steps:
   - name: Tests
     pull: always
-    image: python:3.7-buster
+    image: python:3.8-buster
     environment:
       XDG_CACHE_HOME: tmp/pip
     commands:
