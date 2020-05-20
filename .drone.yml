@@ -6,10 +6,8 @@ steps:
   - name: Tests
     pull: always
     image: python:3.8-buster
-    environment:
-      XDG_CACHE_HOME: tmp/pip
     commands:
-      - apt-get update -qq && apt-get install -yqq libimage-exiftool-perl
+#      - apt-get update -qq && apt-get install -yqq libimage-exiftool-perl
       - pip3 install poetry
       - poetry install
       - poetry run pytest
@@ -21,8 +19,6 @@ steps:
       TOKEN:
         from_secret: PYPI_TOKEN
     commands:
-      - cp -f README.md backend
-      - cd backend
       - pip3 install poetry
       - poetry publish --username __token__ --password $TOKEN
     when:
