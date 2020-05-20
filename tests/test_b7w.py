@@ -1,4 +1,4 @@
-from b7w_scripts import __version__
+from b7w_cli import __version__
 
 
 def test_version():

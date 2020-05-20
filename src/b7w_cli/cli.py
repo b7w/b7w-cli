@@ -1,7 +1,7 @@
 import click
 
-from b7w_scripts.images import organise_ext, organise_raw, organise_video
-from b7w_scripts.utils import timeit
+from b7w_cli.images import organise_ext, organise_raw, organise_video
+from b7w_cli.utils import timeit
 
 
 @click.group()

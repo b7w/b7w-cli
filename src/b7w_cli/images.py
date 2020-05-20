@@ -1,7 +1,7 @@
 import time
 from pathlib import Path
 
-from b7w_scripts.utils import iter_files
+from b7w_cli.utils import iter_files
 
 
 def organise_ext():

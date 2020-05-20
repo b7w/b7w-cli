@@ -13,3 +13,18 @@ steps:
       - pip3 install poetry
       - poetry install
       - poetry run pytest
+  - name: Publish
+    pull: always
+    image: python:3.8-buster
+    failure: ignore
+    environment:
+      TOKEN:
+        from_secret: PYPI_TOKEN
+    commands:
+      - cp -f README.md backend
+      - cd backend
+      - pip3 install poetry
+      - poetry publish --username __token__ --password $TOKEN
+    when:
+      branch:
+        - master
