@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "b7w-cli"
-version = "0.1.0"
+version = "0.1.1"
 description = "Useful cli for photos and other things"
 authors = ["B7W <b7w@isudo.ru>"]
 
@@ -9,7 +9,7 @@ readme = "README.md"
 repository = "https://github.com/b7w/b7w-cli"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.6"
 click = "^7.1"
 
 [tool.poetry.dev-dependencies]
