@@ -30,9 +30,9 @@ def organise_raw():
     count = 0
     raw_path = 'RAW'
     extensions = ('.RAF', '.CR2',)
-    if not Path(raw_path).exists():
+    files = [i for i in iter_files('.') if i.suffix in extensions]
+    if not Path(raw_path).exists() and files:
         Path(raw_path).mkdir()
-    files = (i for i in iter_files('.') if i.suffix in extensions)
     for f in files:
         f.rename(f.parent / raw_path / f.name)
         print('Move {} '.format(f.name))
@@ -49,9 +49,9 @@ def organise_video():
     count = 0
     video_path = Path('VIDEO')
     extensions = ('.mov', '.mp4',)
-    if not video_path.exists():
+    files = [i for i in iter_files('.') if i.suffix in extensions]
+    if not video_path.exists() and files:
         video_path.mkdir()
-    files = (i for i in iter_files('.') if i.suffix in extensions)
     for f in files:
         f.rename(f.parent / video_path / f.name)
         print('Move {} '.format(f.name))
