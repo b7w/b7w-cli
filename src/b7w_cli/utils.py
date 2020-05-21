@@ -2,22 +2,22 @@ import functools
 import os
 from contextlib import contextmanager
 from pathlib import Path
-from time import time_ns
+from time import time
 
 
 def timeit(f):
-    msg = '# {0} complete in {1:.0f} min {2:.1f} sec ({3}ns)'
+    msg = '# {0} complete in {1:.0f} min {2:.1f} sec ({3}ms)'
 
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
-        start = time_ns()
+        start = time()
         try:
             return f(*args, **kwargs)
         finally:
-            elapsed = time_ns() - start
-            elapsed_sec = elapsed / 10 ** 9
+            elapsed = time() - start
+            elapsed_sec = elapsed / 10 ** 6
 
-            print(msg.format(f.__name__, elapsed_sec // 60, elapsed_sec % 60, elapsed))
+            print(msg.format(f.__name__, elapsed_sec // 60, elapsed_sec % 60, round(elapsed * 1000)))
 
     return wrapper
 
