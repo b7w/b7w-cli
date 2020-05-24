@@ -1,5 +1,6 @@
 import functools
 import os
+import shlex
 from contextlib import contextmanager
 from pathlib import Path
 from time import time
@@ -20,12 +21,6 @@ def timeit(f):
     return wrapper
 
 
-def iter_files(base_path):
-    for path in Path(base_path).glob('*'):
-        if path.is_file() and not path.match('.*'):
-            yield path
-
-
 @contextmanager
 def cd(folder):
     current = os.getcwd()
@@ -34,3 +29,18 @@ def cd(folder):
         yield
     finally:
         os.chdir(current)
+
+
+def iter_files(base_path):
+    for path in Path(base_path).glob('*'):
+        if path.is_file() and not path.match('.*'):
+            yield path
+
+
+def script(text):
+    t = shlex.quote(text)
+    return os.system(f'osascript -e {t}')
+
+
+def notification(title, text):
+    script(f'display notification "{text}" with title "{title}"')
