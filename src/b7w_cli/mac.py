@@ -8,9 +8,11 @@ def flush_dns():
     os.system('sudo killall -HUP mDNSResponder')
 
 
-def mount_volumes():
+def mount_volumes(conf: dict):
     try:
-        script('mount volume "smb://test@media.lc/test"')
+        for volume in conf.get('Mount', {}).values():
+            print(f'Mount volume "{volume}"')
+            script(f'mount volume "{volume}"')
         notification('Remount', 'Ok')
     except Exception as e:
         print(e)

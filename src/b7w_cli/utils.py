@@ -5,6 +5,14 @@ from contextlib import contextmanager
 from pathlib import Path
 from time import time
 
+import toml
+
+DEFAULT_CONFIG = """
+[Mount]
+# name = "smb://user@host/folder"
+
+"""
+
 
 def timeit(f):
     msg = '# {0} complete in {1:.0f} min {2:.0f} sec ({3:.0f}ms)'
@@ -29,6 +37,15 @@ def cd(folder):
         yield
     finally:
         os.chdir(current)
+
+
+def read_config():
+    p = Path('~/.b7w.ini').expanduser()
+    if not p.exists():
+        with p.open(mode='w') as f:
+            f.write(DEFAULT_CONFIG)
+
+    return toml.load(p)
 
 
 def iter_files(base_path):

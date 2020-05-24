@@ -2,7 +2,7 @@ import click
 
 from b7w_cli.images import organise_ext, organise_raw, organise_video
 from b7w_cli.mac import flush_dns, mount_volumes
-from b7w_cli.utils import timeit
+from b7w_cli.utils import timeit, read_config
 
 
 @click.group()
@@ -37,7 +37,8 @@ def flush():
 @mac.command()
 @timeit
 def mount():
-    mount_volumes()
+    conf = read_config()
+    mount_volumes(conf)
 
 
 if __name__ == '__main__':
