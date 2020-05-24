@@ -6,7 +6,7 @@ from time import time
 
 
 def timeit(f):
-    msg = '# {0} complete in {1:.0f} min {2:.1f} sec ({3}ms)'
+    msg = '# {0} complete in {1:.0f} min {2:.0f} sec ({3:.0f}ms)'
 
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
@@ -15,9 +15,7 @@ def timeit(f):
             return f(*args, **kwargs)
         finally:
             elapsed = time() - start
-            elapsed_sec = elapsed / 10 ** 6
-
-            print(msg.format(f.__name__, elapsed_sec // 60, elapsed_sec % 60, round(elapsed * 1000)))
+            print(msg.format(f.__name__, elapsed // 60, elapsed % 60, elapsed * 1000))
 
     return wrapper
 
