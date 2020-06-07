@@ -58,3 +58,28 @@ def organise_video():
         count += 1
     elapsed = int(time.time() - start)
     print('# Move {0} video files in {1:d} min {2:d} sec'.format(count, elapsed // 60, elapsed % 60))
+
+
+def merge_raws(force=False):
+    start = time.time()
+    raw_path = 'RAW'
+    jpgs = {i.stem for i in iter_files('.')}
+    raws = {i.stem for i in iter_files(raw_path)}
+    diff = (raws - jpgs)
+    moved = []
+    if len(diff):
+        print('Diff: ' + ', '.join(sorted(diff)))
+        answer = 'y' if force else input('Are you sure to move to trash {} photos?(y/n): '.format(len(diff)))
+        if answer == 'y':
+            for raw_name in diff:
+                paths = Path(raw_path).glob(raw_name + '.*')
+                for p in paths:
+                    p.rename(Path.home() / ".Trash" / p.name)
+                    moved.append(p.name)
+            print('Moved: ' + ', '.join(moved))
+        else:
+            print('Stop')
+    else:
+        print('No difference')
+    elapsed = int(time.time() - start)
+    print('# Move {0} video files in {1:d} min {2:d} sec'.format(len(moved), elapsed // 60, elapsed % 60))
