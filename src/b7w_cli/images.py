@@ -1,3 +1,4 @@
+import shutil
 import time
 from pathlib import Path
 
@@ -74,7 +75,7 @@ def merge_raws(force=False):
             for raw_name in diff:
                 paths = Path(raw_path).glob(raw_name + '.*')
                 for p in paths:
-                    p.rename(Path.home() / ".Trash" / p.name)
+                    shutil.move(p, Path.home() / ".Trash" / p.name)
                     moved.append(p.name)
             print('Moved: ' + ', '.join(moved))
         else:

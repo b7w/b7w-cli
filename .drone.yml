@@ -10,7 +10,7 @@ steps:
 #      - apt-get update -qq && apt-get install -yqq libimage-exiftool-perl
       - pip3 install poetry
       - poetry install
-      - poetry run pytest
+      - poetry run pytest -v
 
   - name: Build
     pull: always

@@ -1,4 +1,5 @@
 import shutil
+import traceback
 from pathlib import Path
 
 from b7w_cli.cli import organise, merge
@@ -17,6 +18,9 @@ def test_organise():
     with cd('./tmp'):
         runner = CliRunner()
         result = runner.invoke(organise, [])
+        print(result.stdout)
+        if result.exc_info:
+            traceback.print_exception(*result.exc_info)
         assert result.exit_code == 0
 
     assert list(Path('./tmp').glob('*')) == []
@@ -29,6 +33,7 @@ def test_merge():
     # given
     shutil.rmtree('./tmp', ignore_errors=True)
     Path('./tmp/RAW').mkdir(parents=True, exist_ok=True)
+    Path(Path.home(), ".Trash").mkdir(parents=False, exist_ok=True)
     for i in range(1, 5):
         Path(f'./tmp/RAW/{i}.RAF').touch()
     Path('./tmp/1.jpg').touch()
@@ -37,7 +42,10 @@ def test_merge():
     with cd('./tmp'):
         runner = CliRunner()
         result = runner.invoke(merge, ['--force'])
-        assert result.exit_code == 0, str(result.stdout)
+        print(result.stdout)
+        if result.exc_info:
+            traceback.print_exception(*result.exc_info)
+        assert result.exit_code == 0
 
         assert sorted(i.as_posix() for i in Path('./').glob('*.jpg')) == ['1.jpg', '3.jpg']
         assert sorted(i.as_posix() for i in Path('./RAW').glob('*')) == ['RAW/1.RAF', 'RAW/3.RAF']
