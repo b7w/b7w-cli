@@ -1,7 +1,7 @@
 import shutil
 from pathlib import Path
 
-from b7w_cli.cli import organise
+from b7w_cli.cli import organise, merge
 from b7w_cli.utils import cd
 from click.testing import CliRunner
 
@@ -20,3 +20,24 @@ def test_organise():
         assert result.exit_code == 0
 
     assert list(Path('./tmp').glob('*')) == []
+
+
+def test_merge():
+    """
+    Invoke img merge
+    """
+    # given
+    shutil.rmtree('./tmp', ignore_errors=True)
+    Path('./tmp/RAW').mkdir(parents=True, exist_ok=True)
+    for i in range(1, 5):
+        Path(f'./tmp/RAW/{i}.RAF').touch()
+    Path('./tmp/1.jpg').touch()
+    Path('./tmp/3.jpg').touch()
+
+    with cd('./tmp'):
+        runner = CliRunner()
+        result = runner.invoke(merge, ['--force'])
+        assert result.exit_code == 0, str(result.stdout)
+
+        assert sorted(i.as_posix() for i in Path('./').glob('*.jpg')) == ['1.jpg', '3.jpg']
+        assert sorted(i.as_posix() for i in Path('./RAW').glob('*')) == ['RAW/1.RAF', 'RAW/3.RAF']
