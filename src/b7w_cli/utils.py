@@ -48,8 +48,8 @@ def read_config():
     return toml.load(p)
 
 
-def iter_files(base_path):
-    for path in Path(base_path).glob('*'):
+def iter_files(base_path, pattern='*'):
+    for path in Path(base_path).glob(pattern):
         if path.is_file() and not path.match('.*'):
             yield path
 

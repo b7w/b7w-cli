@@ -1,5 +1,6 @@
 import shutil
 import time
+from itertools import chain
 from pathlib import Path
 
 from b7w_cli.utils import iter_files
@@ -84,3 +85,19 @@ def merge_raws(force=False):
         print('No difference')
     elapsed = int(time.time() - start)
     print('# Move {0} video files in {1:d} min {2:d} sec'.format(len(moved), elapsed // 60, elapsed % 60))
+
+
+def jpg_size(paths):
+    count = 0
+    total = 0
+    paths = paths if paths else ('',)
+
+    for f in chain.from_iterable(iter_files(p, pattern='**/*.jpg') for p in paths):
+        count += 1
+        total += f.stat().st_size
+    average = total / count
+    t = round(total / 10 ** 6)
+    a = round(average / 10 ** 6)
+    print(f'Count:\t\t{count}')
+    print(f'Total size:\t{t}mb')
+    print(f'Average size:\t{a}mb')

@@ -1,6 +1,6 @@
 import click
 
-from b7w_cli.images import organise_ext, organise_raw, organise_video, merge_raws
+from b7w_cli.images import organise_ext, organise_raw, organise_video, merge_raws, jpg_size
 from b7w_cli.mac import flush_dns, mount_volumes
 from b7w_cli.utils import timeit, read_config
 
@@ -28,6 +28,13 @@ def organise():
 @timeit
 def merge(force):
     merge_raws(force)
+
+
+@img.command()
+@click.argument('paths', nargs=-1)
+@timeit
+def size(paths):
+    jpg_size(paths)
 
 
 @main.group()
