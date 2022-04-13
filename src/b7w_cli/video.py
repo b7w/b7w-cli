@@ -1,4 +1,5 @@
 import os
+import shlex
 import time
 
 from b7w_cli.utils import iter_files
@@ -18,8 +19,8 @@ def convert_mov2mp4(preset, quality):
         print(f'Converting {input} to {output}')
         cmd = f'nice -n 10' \
               f' HandBrakeCLI -i {input} -o {output}' \
-              f' --preset="{preset}"' \
-              f' --crop="0:0:0:0" --rotate="angle=180:hflip=0" --quality={quality}'
+              f' --preset={shlex.quote(preset)}' \
+              f' --crop="0:0:0:0" --rotate="angle=180:hflip=0" --quality={shlex.quote(quality)}'
         if os.system(cmd) == 0:
             count += 1
 

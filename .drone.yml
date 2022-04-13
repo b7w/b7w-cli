@@ -6,7 +6,7 @@ name: Main
 steps:
   - name: Tests
     pull: always
-    image: python:3.6-buster
+    image: python:3.8-slim
     commands:
       # - apt-get update -qq && apt-get install -yqq libimage-exiftool-perl
       - pip3 install poetry
@@ -15,14 +15,14 @@ steps:
 
   - name: Build
     pull: always
-    image: python:3.6-buster
+    image: python:3.8-slim
     commands:
       - pip3 install poetry
       - poetry build
 
   - name: Publish
     pull: always
-    image: python:3.6-buster
+    image: python:3.8-slim
     failure: ignore
     environment:
       TOKEN:
