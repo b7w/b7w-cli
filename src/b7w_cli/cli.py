@@ -69,5 +69,13 @@ def mount():
     mount_volumes(conf)
 
 
+@main.command()
+def version():
+    from . import __version__
+    conf = read_config()
+    print(f'Version: {__version__}')
+    print(f'Config: {conf}')
+
+
 if __name__ == '__main__':
     main()
