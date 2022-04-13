@@ -3,6 +3,7 @@ import click
 from b7w_cli.images import organise_ext, organise_raw, organise_video, merge_raws, jpg_size
 from b7w_cli.mac import flush_dns, mount_volumes
 from b7w_cli.utils import timeit, read_config
+from b7w_cli.video import convert_mov2mp4
 
 
 @click.group()
@@ -35,6 +36,19 @@ def merge(force):
 @timeit
 def size(paths):
     jpg_size(paths)
+
+
+@main.group()
+def video():
+    pass
+
+
+@video.command()
+@click.option('--preset', default='Apple 2160p60 4K HEVC Surround')
+@click.option('--quality', default='20')
+@timeit
+def mov_to_mp4(preset, quality):
+    convert_mov2mp4(preset, quality)
 
 
 @main.group()
