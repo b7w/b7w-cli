@@ -1,3 +1,4 @@
+import os
 import shutil
 import time
 from itertools import chain
@@ -102,3 +103,14 @@ def jpg_size(paths):
     print(f'Count:\t\t{count}')
     print(f'Total size:\t{t}mb')
     print(f'Average size:\t{a}mb')
+
+
+def open_all(paths):
+    paths = paths if paths else ('',)
+
+    iterable = chain.from_iterable(iter_files(p, pattern='**/*.jpg') for p in paths)
+    files = list(sorted(iterable, key=lambda x: x.name))
+    count = len(files)
+    args = ' '.join(i.as_posix() for i in files)
+    print(f'Count:\t\t{count}')
+    os.system(f'open {args}')

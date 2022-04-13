@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "b7w-cli"
-version = "0.1.6"
+version = "0.1.7"
 description = "Useful cli for photos and other things"
 authors = ["B7W <b7w@isudo.ru>"]
 

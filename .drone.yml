@@ -18,6 +18,7 @@ steps:
     image: python:3.8-slim
     commands:
       - pip3 install poetry
+      - echo "__version__ = '$(poetry version --short)'" > src/b7w_cli/__init__.py
       - poetry build
 
   - name: Publish
