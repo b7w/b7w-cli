@@ -84,7 +84,8 @@ def merge_raws(force=False):
     else:
         print('No difference')
     elapsed = int(time.time() - start)
-    print('# Move {0} video files in {1:d} min {2:d} sec'.format(len(moved), elapsed // 60, elapsed % 60))
+    print('# Move {0} raw files in {1:d} min {2:d} sec'.format(len(moved), elapsed // 60, elapsed % 60))
+    print('# Total {0} images'.format(len(jpgs)))
 
 
 def jpg_size(paths):

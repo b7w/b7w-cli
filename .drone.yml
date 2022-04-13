@@ -1,5 +1,6 @@
 ---
 kind: pipeline
+type: docker
 name: Main
 
 steps:
@@ -7,7 +8,7 @@ steps:
     pull: always
     image: python:3.6-buster
     commands:
-#      - apt-get update -qq && apt-get install -yqq libimage-exiftool-perl
+      # - apt-get update -qq && apt-get install -yqq libimage-exiftool-perl
       - pip3 install poetry
       - poetry install
       - poetry run pytest -v
