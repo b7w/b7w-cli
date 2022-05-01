@@ -51,11 +51,13 @@ def video():
 
 
 @video.command()
+@click.argument('paths', nargs=-1)
 @click.option('--preset', default='Apple 2160p60 4K HEVC Surround')
-@click.option('--quality', default='20')
+@click.option('--quality', default=20, type=int)
+@click.option('--rotate', default=0, type=int)
 @timeit
-def mov_to_mp4(preset, quality):
-    convert_mov2mp4(preset, quality)
+def mov_to_mp4(paths, preset, quality, rotate):
+    convert_mov2mp4(paths, preset, quality, rotate)
 
 
 @main.group()
