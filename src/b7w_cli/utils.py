@@ -49,9 +49,13 @@ def read_config():
 
 
 def iter_files(base_path, pattern='*'):
-    for path in Path(base_path).glob(pattern):
-        if path.is_file() and not path.match('.*'):
-            yield path
+    base = Path(base_path)
+    if base.is_dir():
+        for path in base.glob(pattern):
+            if path.is_file() and not path.match('.*'):
+                yield path
+    if base.is_file() and not base.match('.*'):
+        yield base
 
 
 def script(text):
