@@ -1,10 +1,9 @@
 import os
-import shutil
 import time
 from itertools import chain
 from pathlib import Path
 
-from b7w_cli.utils import iter_files
+from b7w_cli.utils import iter_files, script
 
 
 def organise_ext():
@@ -77,7 +76,8 @@ def merge_raws(force=False):
             for raw_name in diff:
                 paths = Path(raw_path).glob(raw_name + '.*')
                 for p in paths:
-                    shutil.move(p, Path.home() / ".Trash" / p.name)
+                    script(f'tell app "Finder" to move (the POSIX file "{p.absolute().as_posix()}") to trash',
+                           with_stdout=False)
                     moved.append(p.name)
             print('Moved: ' + ', '.join(moved))
         else:
@@ -113,4 +113,7 @@ def open_all(paths):
     count = len(files)
     args = ' '.join(i.as_posix() for i in files)
     print(f'Count:\t\t{count}')
-    os.system(f'open {args}')
+    if count:
+        os.system(f'open {args}')
+    else:
+        print('No files')

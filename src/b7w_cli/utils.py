@@ -1,6 +1,8 @@
 import functools
 import os
 import shlex
+import subprocess
+import sys
 from contextlib import contextmanager
 from pathlib import Path
 from time import time
@@ -58,9 +60,12 @@ def iter_files(base_path, pattern='*'):
         yield base
 
 
-def script(text):
+def script(text, with_stdout=True):
     t = shlex.quote(text)
-    return os.system(f'osascript -e {t}')
+    if with_stdout:
+        return os.system(f'osascript -e {t}')
+    else:
+        return os.system(f'osascript -e {t} > /dev/null')
 
 
 def notification(title, text):
