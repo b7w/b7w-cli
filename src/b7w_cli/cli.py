@@ -17,11 +17,13 @@ def img():
 
 
 @img.command()
+@click.argument('paths', nargs=-1, type=click.Path(exists=True, file_okay=False))
 @timeit
-def organise():
-    organise_ext()
-    organise_raw()
-    organise_video()
+def organise(paths):
+    for path in paths or ('.',):
+        organise_ext(path)
+        organise_raw(path)
+        organise_video(path)
 
 
 @img.command()
