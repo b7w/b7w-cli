@@ -9,7 +9,7 @@ steps:
     image: python:3.8-slim
     commands:
       # - apt-get update -qq && apt-get install -yqq libimage-exiftool-perl
-      - pip3 install poetry
+      - pip3 install poetry==1.1.15
       - poetry install
       - poetry run pytest -v
 
