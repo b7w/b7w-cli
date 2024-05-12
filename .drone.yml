@@ -12,6 +12,7 @@ steps:
         path: /var/cache/ci-cache
     environment:
       XDG_CACHE_HOME: /var/cache/ci-cache
+      POETRY_VIRTUALENVS_PATH: /var/cache/venvs
     commands:
       - pip3 install poetry
       - poetry install
@@ -25,6 +26,7 @@ steps:
         path: /var/cache/ci-cache
     environment:
       XDG_CACHE_HOME: /var/cache/ci-cache
+      POETRY_VIRTUALENVS_PATH: /var/cache/venvs
     commands:
       - pip3 install poetry
       - echo "__version__ = '$(poetry version --short)'" > src/b7w_cli/__init__.py
@@ -39,6 +41,7 @@ steps:
         path: /var/cache/ci-cache
     environment:
       XDG_CACHE_HOME: /var/cache/ci-cache
+      POETRY_VIRTUALENVS_PATH: /var/cache/venvs
       TOKEN:
         from_secret: PYPI_TOKEN
     commands:

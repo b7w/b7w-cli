@@ -1,5 +1,6 @@
 import click
 
+from b7w_cli.behappy import behappy_new
 from b7w_cli.images import organise_ext, organise_raw, organise_video, merge_raws, jpg_size, open_all
 from b7w_cli.mac import flush_dns, mount_volumes
 from b7w_cli.utils import timeit, read_config
@@ -62,6 +63,16 @@ def video():
 @timeit
 def mov_to_mp4(paths, preview, preset, quality, rotate):
     convert_mov2mp4(paths, preview, preset, quality, rotate)
+
+
+@main.group()
+def behappy():
+    pass
+
+
+@behappy.command()
+def new():
+    behappy_new()
 
 
 @main.group()
