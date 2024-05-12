@@ -56,8 +56,9 @@ def video():
 @video.command()
 @click.argument('paths', nargs=-1)
 @click.option('--preview', default=0, type=int, help='Preview time in seconds')
-@click.option('--preset', default='Vimeo YouTube HQ 2160p60 4K',
-              help='HandBrake preset, default "Vimeo YouTube HQ 2160p60 4K"')
+@click.option('--preset', default='Creator 2160p60 4K',
+              help='HandBrake preset, default "Creator 2160p60 4K"')
+@click.option('--quality', default=10, type=int, help='Video quality, default 10')
 @click.option('--quality', default=20, type=int, help='Video quality, default 20')
 @click.option('--rotate', default=0, type=int, help='Video rotation, default 0')
 @timeit
