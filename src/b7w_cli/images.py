@@ -77,8 +77,11 @@ def merge_raws(force=False):
             for raw_name in diff:
                 paths = Path(raw_path).glob(raw_name + '.*')
                 for p in paths:
-                    script(f'tell app "Finder" to move (the POSIX file "{p.absolute().as_posix()}") to trash',
-                           with_stdout=False)
+                    code = script(f'tell app "Finder" to move (the POSIX file "{p.absolute().as_posix()}") to trash',
+                                  with_stdout=False)
+                    if code != 0:
+                        print(f'# Finder return {code} exit code, removing file {p.name}')
+                        p.unlink()
                     moved.append(p.name)
             print('Moved: ' + ', '.join(moved))
         else:
