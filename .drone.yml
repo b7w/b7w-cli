@@ -6,26 +6,39 @@ name: Main
 steps:
   - name: Tests
     pull: always
-    image: python:3.8-slim
+    image: python:3.11-bookworm
+    volumes:
+      - name: ci-cache
+        path: /var/cache/ci-cache
+    environment:
+      XDG_CACHE_HOME: /var/cache/ci-cache
     commands:
-      # - apt-get update -qq && apt-get install -yqq libimage-exiftool-perl
-      - pip3 install poetry==1.1.15
+      - pip3 install poetry
       - poetry install
       - poetry run pytest -v
 
   - name: Build
     pull: always
-    image: python:3.8-slim
+    image: python:3.11-bookworm
+    volumes:
+      - name: ci-cache
+        path: /var/cache/ci-cache
+    environment:
+      XDG_CACHE_HOME: /var/cache/ci-cache
     commands:
       - pip3 install poetry
       - echo "__version__ = '$(poetry version --short)'" > src/b7w_cli/__init__.py
       - poetry build
 
   - name: Publish
-    pull: always
-    image: python:3.8-slim
     failure: ignore
+    pull: always
+    image: python:3.11-bookworm
+    volumes:
+      - name: ci-cache
+        path: /var/cache/ci-cache
     environment:
+      XDG_CACHE_HOME: /var/cache/ci-cache
       TOKEN:
         from_secret: PYPI_TOKEN
     commands:
@@ -34,3 +47,8 @@ steps:
     when:
       branch:
         - master
+
+volumes:
+  - name: ci-cache
+    host:
+      path: '/volumes/system/ci-cache/b7w-cli'
