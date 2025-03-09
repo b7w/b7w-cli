@@ -13,7 +13,7 @@ def organise_ext(base_path):
     start = time.time()
     count = 0
     extensions = ('.JPG', '.MOV', '.MP4',)
-    files = (i for i in iter_files(base_path) if i.suffix in extensions)
+    files = (i for i in iter_files(base_path, pattern='**/*') if i.suffix in extensions)
     for path in files:
         new_name = path.with_suffix(path.suffix.lower())
         path.rename(new_name)
