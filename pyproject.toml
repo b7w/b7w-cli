@@ -1,9 +1,10 @@
-[tool.poetry]
+[project]
 name = "b7w-cli"
 version = "0.3.2"
 description = "Useful cli for photos and other things"
-authors = ["B7W <b7w@isudo.ru>"]
-
+authors = [
+    {name = "B7W", email = "b7w@isudo.ru"},
+]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/b7w/b7w-cli"
@@ -14,12 +15,12 @@ click = "^8.1"
 toml = "^0.10.1"
 python-dateutil = "^2.9"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^8"
 pytest-cov = "^6"
 pytest-flakes = "^4.0"
 
-[tool.poetry.scripts]
+[project.scripts]
 b7w = "b7w_cli.cli:main"
 
 [build-system]
