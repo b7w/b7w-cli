@@ -1,6 +1,6 @@
 [project]
 name = "b7w-cli"
-version = "0.3.2"
+version = "0.3.3"
 description = "Useful cli for photos and other things"
 authors = [
     {name = "B7W", email = "b7w@isudo.ru"},
