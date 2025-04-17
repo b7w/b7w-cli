@@ -1,57 +1,51 @@
 ---
-kind: pipeline
-type: docker
-name: Main
-
 steps:
-  - name: Tests
-    pull: always
+  - name: 'Tests'
     image: python:3.11-bookworm
+    pull: true
     volumes:
-      - name: ci-cache
-        path: /var/cache/ci-cache
+      # ci-cache
+      - '/volumes/system/ci-cache/b7w-cli:/var/cache/ci-cache'
     environment:
       XDG_CACHE_HOME: /var/cache/ci-cache
       POETRY_VIRTUALENVS_PATH: /var/cache/venvs
     commands:
-      - pip3 install poetry
+      - pip3 install 'poetry>=2.1.0,<2.2.0'
       - poetry install
       - poetry run pytest -v
+    when:
+      - event: [ push, pull_request ]
 
-  - name: Build
-    pull: always
+  - name: 'Build'
     image: python:3.11-bookworm
     volumes:
-      - name: ci-cache
-        path: /var/cache/ci-cache
+      # ci-cache
+      - '/volumes/system/ci-cache/b7w-cli:/var/cache/ci-cache'
     environment:
       XDG_CACHE_HOME: /var/cache/ci-cache
       POETRY_VIRTUALENVS_PATH: /var/cache/venvs
     commands:
-      - pip3 install poetry
+      - pip3 install 'poetry>=2.1.0,<2.2.0'
       - echo "__version__ = '$(poetry version --short)'" > src/b7w_cli/__init__.py
       - poetry build
+    when:
+      - event: [ push, pull_request ]
 
-  - name: Publish
+  - name: 'Publish'
     failure: ignore
-    pull: always
     image: python:3.11-bookworm
     volumes:
-      - name: ci-cache
-        path: /var/cache/ci-cache
+      # ci-cache
+      - '/volumes/system/ci-cache/b7w-cli:/var/cache/ci-cache'
     environment:
       XDG_CACHE_HOME: /var/cache/ci-cache
       POETRY_VIRTUALENVS_PATH: /var/cache/venvs
       TOKEN:
         from_secret: PYPI_TOKEN
     commands:
-      - pip3 install poetry
+      - pip3 install 'poetry>=2.1.0,<2.2.0'
       - poetry publish --username __token__ --password $TOKEN
     when:
+      event: [ push, pull_request ]
       branch:
         - master
-
-volumes:
-  - name: ci-cache
-    host:
-      path: '/volumes/system/ci-cache/b7w-cli'
